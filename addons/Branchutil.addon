@@ -1,6 +1,6 @@
 :main
 a_name BranchUtil
-a_version 1.0
+a_version 1.2
 a_author Luna
 var redefinir_logo True
 
@@ -31,7 +31,6 @@ exec cd servidor_minecraft
 unzip luna.zip
 exec rm luna.zip
 exec mv Utilidades.py addons
-exec mv Branchutil.addon addons
 use redefine_funcs
 if "%redefinir_logo%"=="True" redefinir_logo_s none
 
